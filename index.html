@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ЛР №4</title>
+    <style>
+        #title { /* Стиль тексту заголовка сторінки */
+            text-align: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgb(133, 106, 31);
+            font-size: 35px;
+        }
+
+        #table-title { /* Стиль тексту заголовка таблиці */
+            text-align: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgb(133, 106, 31);
+            font-size: 25px;
+        }
+
+        #img { /* Стиль змінних зображень */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            height: 50%;
+        }
+
+        button { /* Стиль кнопок (під зображенням) */
+            width: 170px;
+            padding: 9px;
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 6px;
+        }
+
+        div#buttons { /* Стиль div з кнопками (під зображенням) */
+            padding-top: 10px;
+            text-align: center;
+        }
+
+        button:last-child:hover { /* Стиль кнопки last-child з наведенням */
+            background-color: red;
+            color: white;
+        }
+
+        button:hover { /* Стиль кнопки з наведенням */
+            background-color: rgb(209, 209, 209);
+            color: rgb(0, 0, 0);
+        }
+
+        div#table-button button { /* Стиль кнопки у div class="table-button" (під формою для таблиці) */
+            width: 170px;
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 6px;
+            
+        }
+
+        div#table-button button:hover { /* Стиль кнопки з наведенням у div class="table-button" (під формою для таблиці) */
+            background-color: rgb(209, 209, 209);
+            color: rgb(0, 0, 0);
+        }
+
+        div#table-button { /* Стиль div з кнопкою (під формою для таблиці) */
+            padding-top: 10px;
+            text-align: center;
+        }
+
+        div#input-label-centrator { /* Стиль div з елементами форми для таблиці */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #input-label-centrator label,
+        #input-label-centrator input { /* Стиль label та input у div class="input-label-centrator" (у формі таблиці) */
+            margin: 5px 0;
+        }
+
+        #input-label-centrator label { /* Стиль label у div class="input-label-centrator" (у формі таблиці) */
+            color: white;
+            text-shadow: 1px 1px 2px rgb(133, 106, 31);
+            font-size: 15px;
+        }
+
+        div#table-style table { /* Стиль таблиці у div class="table-style" */
+            margin-top: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            width: 20%;
+        }
+
+        div#table-style table th,
+        div#table-style table td { /* Стиль th та td таблиці у div class="table-style" */
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <p id="title">Лабораторна робота №3</p>
+
+    <img id="img" src="Images/img1.png" alt="Image 1">
+
+    <div id="buttons">
+        <button id="changeInterval">Змінити інтервал</button>
+        <button id="stopButton">Зупинити слайд-шоу</button>
+    </div>
+
+    <!-- Скрипт інтервальної зміни зображень -->
+    <script> 
+        let images = ["Images/img1.png", "Images/img2.png", "Images/img3.png", "Images/img4.png", "Images/img5.png", "Images/img6.png", "Images/img7.png"];
+        let currentIndex = 0;
+        let changeInterval;
+
+        function startImageChanging(intervalInSeconds) { // Функція запуску інтервального зміни зображень
+            clearInterval(changeInterval);
+            changeInterval = setInterval(changeImage, intervalInSeconds * 1000);
+        }
+
+        function changeImage() { // Функція зміни зображень
+            const slideshow = document.getElementById("img");
+            currentIndex = (currentIndex + 1) % images.length;
+            slideshow.src = images[currentIndex];
+            slideshow.alt = `Image ${currentIndex + 1}`;
+        }
+
+        document.getElementById("changeInterval").addEventListener("click", () => { // Модальне вікно редагування інтервалу зміни зображень (натискання на кнопку)
+            const intervalInput = prompt("Введіть новий інтервал у секундах");
+            if (intervalInput !== null) {
+                startImageChanging(parseInt(intervalInput));
+            }
+        });
+
+        document.getElementById("stopButton").addEventListener("click", () => clearInterval(slideshowInterval)); // Зупинка роботи функції інтервальної зміни зображень (натискання на кнопку)
+ 
+        startImageChanging(3); // Інтервал за замовчуванням: 3 секунди
+    </script>
+
+    <p id="table-title">Таблиця</p>
+    <div id="input-label-centrator">
+        <label for="min">Мінімальне значення: </label>
+        <input type="number" id="min" min="0" placeholder="Наприклад: 1">
+        <label for="max">Максимальне значення: </label>
+        <input type="number" id="max" min="1" placeholder="Наприклад: 99">
+    </div>
+
+    <div id="table-button">
+        <button id="generate">Згенерувати таблицю</button>
+    </div>
+
+    <div id="table-style">
+        <table id="generatedTable" style="width: 250px; height: 250px;">
+            <tbody>
+                <!-- Тут буде створено контент таблиці за допомогою JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Скрипт генерації таблиці з рандомними числами за вказаним інтервалом -->
+    <script>
+        function getRandomInteger(min, max) { // Функція рандомізації чисел за інтервалом min-max
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function generateTable() { // Функція генерації контенту таблиці
+            const min = parseInt(document.getElementById('min').value);
+            const max = parseInt(document.getElementById('max').value);
+
+            const tableBody = document.querySelector('#generatedTable tbody');
+            tableBody.innerHTML = ''; // Очищення попереднього вмісту таблиці (при повторній генерації)
+
+            for (let i = 1; i <= 7; i++) {
+                const row = document.createElement('tr');
+                for (let j = 1; j <= 7; j++) {
+                    const randomNumber = getRandomInteger(min, max);
+                    const cell = document.createElement('td');
+                    cell.textContent = randomNumber;
+
+                    // Стилізація комірок таблиці у вигляді шахмат
+                    if ((i + j) % 2 === 0) {
+                        cell.style.backgroundColor = 'black';
+                        cell.style.color = 'white'
+                    } else {
+                        cell.style.backgroundColor = 'white';
+                    }
+
+                    row.appendChild(cell);
+                }
+                tableBody.appendChild(row);
+            }
+        }
+        document.getElementById('generate').addEventListener('click', generateTable); // Генерація таблиці (натискання на кнопку)
+    </script>
+
+    <!-- Скрипт зміни заднього фону сторінки за часом доби -->
+    <script>
+        var currentDate = new Date();
+        var currentHour = currentDate.getHours; // Отримання поточного часу (в годинах)
+        var body = document.body;
+
+        // Умови для зміни фону в залежності від хвилин
+        if (currentHour >= 0 && currentHour < 6) {
+            document.body.style.backgroundColor = 'darkblue'; // Ніч (Години: 0-6)
+        } else if (currentHour >= 6 && currentHour < 12) {
+            document.body.style.backgroundColor = 'yellow'; // Ранок (Години: 6-12)
+        } else if (currentHour >= 12 && currentHour < 16) {
+            document.body.style.backgroundColor = 'blue'; // День (Години: 12-16)
+        } else {
+            document.body.style.backgroundColor = '#0a024f'; // Вечір (Години: 16-0)
+        }
+
+    </script>
+
+</body>
+
+</html>
