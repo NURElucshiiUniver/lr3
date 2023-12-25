@@ -42,14 +42,14 @@
             text-align: center;
         }
 
+        button:first-child:hover { /* Стиль кнопки first-child з наведенням */
+            background-color: rgb(209, 209, 209);
+            color: rgb(0, 0, 0);
+        }
+
         button:last-child:hover { /* Стиль кнопки last-child з наведенням */
             background-color: red;
             color: white;
-        }
-
-        button:hover { /* Стиль кнопки з наведенням */
-            background-color: rgb(209, 209, 209);
-            color: rgb(0, 0, 0);
         }
 
         div#table-button button { /* Стиль кнопки у div class="table-button" (під формою для таблиці) */
@@ -78,12 +78,12 @@
             justify-content: center;
         }
 
-        #input-label-centrator label,
-        #input-label-centrator input { /* Стиль label та input у div class="input-label-centrator" (у формі таблиці) */
-            margin: 5px 0;
+        div#input-label-centrator label,
+        div#input-label-centrator input { /* Стиль label та input у div class="input-label-centrator" (у формі таблиці) */
+            margin: 4px;
         }
 
-        #input-label-centrator label { /* Стиль label у div class="input-label-centrator" (у формі таблиці) */
+        div#input-label-centrator label { /* Стиль label у div class="input-label-centrator" (у формі таблиці) */
             color: white;
             text-shadow: 1px 1px 2px rgb(133, 106, 31);
             font-size: 15px;
@@ -94,7 +94,6 @@
             margin-left: auto;
             margin-right: auto;
             border-collapse: collapse;
-            width: 20%;
         }
 
         div#table-style table th,
@@ -109,7 +108,7 @@
 
     <p id="title">Лабораторна робота №3</p>
 
-    <img id="img" src="Images/img1.png" alt="Image 1">
+    <img id="img" src="Images/img1.png">
 
     <div id="buttons">
         <button id="changeInterval">Змінити інтервал</button>
@@ -131,17 +130,16 @@
             const slideshow = document.getElementById("img");
             currentIndex = (currentIndex + 1) % images.length;
             slideshow.src = images[currentIndex];
-            slideshow.alt = `Image ${currentIndex + 1}`;
         }
 
         document.getElementById("changeInterval").addEventListener("click", () => { // Модальне вікно редагування інтервалу зміни зображень (натискання на кнопку)
-            const intervalInput = prompt("Введіть новий інтервал у секундах");
-            if (intervalInput !== null) {
+            const intervalInput = prompt("Введіть новий інтервал у секундах (1 або більше)");
+            if (intervalInput >= 1 ) {
                 startImageChanging(parseInt(intervalInput));
             }
         });
 
-        document.getElementById("stopButton").addEventListener("click", () => clearInterval(slideshowInterval)); // Зупинка роботи функції інтервальної зміни зображень (натискання на кнопку)
+        document.getElementById("stopButton").addEventListener("click", () => clearInterval(changeInterval)); // Зупинка роботи функції інтервальної зміни зображень (натискання на кнопку)
  
         startImageChanging(3); // Інтервал за замовчуванням: 3 секунди
     </script>
